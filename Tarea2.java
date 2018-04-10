@@ -14,18 +14,21 @@
  
 class Persona  {  
   	private String nombre;  
+  	private char cod_sexo; 
    	private int a_nac;
   	  
-        public void  asignar  (String n, int a)   
+        public void  asignar  (String n, int a, char s)   
    	   { 
-   	   	nombre = n; a_nac = a;
+   	   	nombre = n; a_nac = a; cod_sexo=s;
    	   }   	
    		   
        public String  get_nom()
    	   { 
    	   	return nombre;
    	   }  
-
+       public char get_cod_sexo()
+       {return cod_sexo;}
+   	
        public int  get_a()
    	   { 
    	   	return a_nac;
@@ -40,8 +43,8 @@ class Persona  {
     private int totcredito, puntos;     
     private  String carrera; 
          
-    public void  asignar (String n, int a, int t, int p, String carr)   
-    { asignar (n, a);
+    public void  asignar (String n, int a, int t, int p, String carr, char s)   
+    { asignar (n, a, s);
       totcredito = t; 
       puntos = p; 
       carrera = carr;     }  
@@ -63,10 +66,10 @@ class Persona  {
    } 
  class Empleado extends Persona{
    private int horat ;
-   private double tarifa;
+   private float tarifa;
    
-   public void  asignar (String n, int a, int ht, double t ) 
-   	{    asignar(n, a);
+   public void  asignar (String n, int a, int ht, float  t, char s) 
+   	{    asignar(n, a, s);
    		 horat= ht;
    		 tarifa= t;
    		
@@ -78,8 +81,9 @@ class Persona  {
       return salario;
     }		   
 
- public double  calcularBono (int añoS)
+ public double  calcularBono (int añoS, int añoE, char s)
     {  double  bono=0;
+    
        if(añoS>20)
        {
        	 bono= calcularSalario ()*0.2 ;
@@ -88,6 +92,13 @@ class Persona  {
        {
        	 bono= 35;
        }
+      	
+      	if(añoE>=55&&s=='f'){
+      	bono=bono+50.00;     
+        }
+        if(añoE>=60&&s=='m'){
+    	bono=bono+50.00;
+        }
       
       return bono;
     }	
@@ -98,14 +109,15 @@ public class Tarea2 {
         
     public static void main(String[] args) {
         
-        Persona per = new Persona();
+        
         Alumno est = new Alumno();
         Empleado emp = new Empleado();	
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //Variables 
          String nombre=" ", carre=" ";
-         int edad=0, elegir=0, seguir=0, TC=0, pun=0, añoA=0, año=0, hora=0, añoS=0; 
-         double t=0;
+         int edad=0, elegir=0, seguir=0, TC=0, pun=0, añoA=0, año=0, hora=0, añoS=0, añoE=0; 
+         float  t=0;
+         char s =' ';
          boolean  a=true;
         
 
@@ -134,8 +146,10 @@ public class Tarea2 {
          	 	 nombre=br.readLine();
          	 System.out.println("Introduzca su año de nacimiento");	
          	     año=Integer.parseInt(br.readLine());
+         	 do{
          	 System.out.println("Introduzca el año actual");	
-         	     añoA=Integer.parseInt(br.readLine());	
+         	     añoA=Integer.parseInt(br.readLine());
+         	 }while(año>añoA);	
          	 System.out.println("Introduzca su total de creditos: "); 
          	 	 TC=Integer.parseInt(br.readLine());
          	 System.out.println("Introduzca su total de puntos: "); 
@@ -155,12 +169,12 @@ public class Tarea2 {
              }
          	 }while(a==false);
          	 	
-         	 per.asignar(nombre, año);	
-         	 est.asignar(nombre, año, TC, pun, carre);
-         	 edad=per.calcularA(añoA);
+         		
+         	 est.asignar(nombre, año, TC, pun, carre, s);
+         	 edad=est.calcularA(añoA);
          	 
          	 	   	  
-          	 System.out.println(per.get_nom()+" su indice: " +  est.calcular_indice()+"\n");
+          	 System.out.println(est.get_nom()+" su indice: " +  est.calcular_indice()+"\n");
           	 System.out.println("Edad: "+edad+"\n");   
           	 System.out.println("Total de creditos: " +  est.get_totcre()+"\n");
           	 System.out.println("Total de puntos: " +  est.get_puntos()+"\n"); 
@@ -177,13 +191,22 @@ public class Tarea2 {
          	 	 nombre=br.readLine();	
          	 System.out.println("Año de Ingreso: "); 
          	 	 año=Integer.parseInt(br.readLine());
+         	 do{
+         	 
          	 System.out.println("Introduzca el año actual: ");	
-         	     añoA=Integer.parseInt(br.readLine());		        	 	 
+         	     añoA=Integer.parseInt(br.readLine());	
+         	 }while(año>añoA);	        	 	 
          	 System.out.println("Introduzca horas trabajadas: "); 
          	     hora=Integer.parseInt(br.readLine());
          	 System.out.println("Introduzca la tarifa por hora: "); 
-         	 	 t=Double.parseDouble(br.readLine());
-         	 	 
+         	 	 t=Float.parseFloat(br.readLine());
+         	 
+         	 System.out.println("Introduzca su sexo: "); 
+         	 	 s=(char)br.read();
+                 br.skip(1);       
+             System.out.println("Introduzca su edad: "); 
+         	     añoE=Integer.parseInt(br.readLine());    	     
+
          	 } 
          	 catch(NumberFormatException ex)
          	 {
@@ -196,13 +219,15 @@ public class Tarea2 {
              }
          	}while(a==false);	
           	 
-          	  per.asignar(nombre, año);	 
-          	  emp.asignar(nombre, año, hora, t );
-          	  añoS=per.calcularA(añoA);
+          	 
+          	  emp.asignar(nombre, año, hora, t, s );
+          	  añoS=emp.calcularA(añoA);
+          	  
+          	  
           	   
-          	 System.out.println(per.get_nom()+" sus años de servicio son: " + añoS +"\n");
+          	 System.out.println(emp.get_nom()+" sus años de servicio son: " + añoS +"\n");
           	 System.out.println("Su salario: "+emp.calcularSalario()+"\n");   
-          	 System.out.println("Su bono navideño es: " + emp.calcularBono(añoS)+"\n");
+          	 System.out.println("Su bono navideño es: " + emp.calcularBono(añoS, añoE, s)+"\n");
      
           	   
           	    
