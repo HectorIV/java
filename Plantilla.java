@@ -31,6 +31,7 @@ class Principal
      do{
          System.out.println("Bienvenido al programa elija una opción:\n\n 1- Op1 \n 2- Op2 \n 3- Salir\n");
          System.out.println("Elije una opción: ");
+         elegir=0;
          try{
          
          elegir=Integer.parseInt(br.readLine());
@@ -54,7 +55,7 @@ class Principal
           
           case 2:
           	 
-          	 System.out.println("Caso 1 metan codigo aqui \n");
+          	 System.out.println("Caso 2 metan codigo aqui \n");
           	 
           	 break;
           //Opción para salir

@@ -20,7 +20,7 @@ interface Estadistica
  }
 
 class CVector implements Estadistica
-{ protected int vector[] = new int [4];
+{ protected int vector[];
   public void  asignar(int v[])
   {
   	vector=v;
@@ -63,7 +63,7 @@ class CVector implements Estadistica
 
 class CMatriz implements Estadistica
 {
-  protected int matriz[][] = new int [4][4];
+  protected int matriz[][];
   public void  asignar(int m[][])
   {
   	matriz=m;
@@ -130,6 +130,7 @@ class Tarea8
     	 
      do{
          System.out.println("Bienvenido al programa elija una opción:\n\n 1- Matriz \n 2- Vector \n 3- Salir\n");
+         elegir=0;
          System.out.println("Elije una opción: ");
          try{
          
@@ -152,6 +153,7 @@ class Tarea8
   			 { try{
   			   System.out.println("Llene la matriz: ");
                matriz[x][y]=Integer.parseInt(br.readLine());
+               
   			   }
   			   catch(IOException e){
          	     System.out.print("Error de entrada/salida.\n");
