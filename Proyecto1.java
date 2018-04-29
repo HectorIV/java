@@ -30,7 +30,7 @@ class Proyecto1
          //Los objetos van aqui 
     
          //La variable elejir es para el menu que esta hecho con un switch se sale con la opción 3 y seguir es para que el do/while continue en ejecución 
-    	 int elegir=0, seguir=0;
+    	 int elegir=0, seguir=0, p=0;
          //Vector de preguntas
          String preguntas[] = new String [5];
          preguntas[0]= "¿Pregunta 1?";
@@ -67,23 +67,32 @@ class Proyecto1
     	    System.out.println("Responda la Encuesta con un 1 si es verdadero y con 0 si es falso. \n");
     	       
     	      for(int e=0; e<=4;e++)
-    	      {
+    	      { p=e+1;
+    	      	System.out.println("Persona "+p);
+    	      	
     	       for(int i=0; i<=4;i++)
-    	       {try{
-    	       
+    	       { 
+    	       	
+    	       	try{
+    	       		
+    	       	do{
     	       	System.out.println(preguntas[i]);
+    	       	
     	       	respuesta[e][i]=Integer.parseInt(br.readLine());
+    	       	
+    	       	}while(respuesta[e][i]<0||respuesta[e][i]>1);
     	        }
     	        catch(IOException a){
          	     System.out.print("Error de entrada/salida.\n");
          	     i--;
-                }
-  			   catch(NumberFormatException a){
+         	     
+                  }
+  			     catch(NumberFormatException a){
   			   	
          	     System.out.print("Solo Introduzca numeros.\n");
          	     i--;
-               }
-    	        
+                 }
+    	       	
     	       }
     	      }
              break;
