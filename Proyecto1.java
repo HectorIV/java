@@ -10,32 +10,22 @@
  */
 import java.io.*;
 
-
-
-interface Encuesta {
-    static final int t=5;
-    
-    void asignar(int x[][]);
-    int[] calcularCiertas();
-    double calcularPorcentaje();
-}
-
-class Encuesta1 implements Encuesta{
+    class Encuesta1{
     private int m[][];
     
     Encuesta1(){
-        m=new int[t][t];
+        m=new int[5][5];
     }
     
-    @Override
+    
     public void asignar(int x[][]){
         m=x;
     }
-    @Override
+    
     public int[] calcularCiertas(){
         int suma=0,x=0,vec[]=new int[5];
-            for (int i = 0; i < t; i++){
-                for (int j = 0; j < t; j++) {
+            for (int i = 0; i < 5; i++){
+                for (int j = 0; j < 5; j++) {
                         if(m[i][j]==1)
                             suma+=1;
                 }
@@ -46,56 +36,63 @@ class Encuesta1 implements Encuesta{
         return vec;
     }
     
-    @Override
+   
     public double calcularPorcentaje(){
          int suma=0;
          double porc;
-        for (int i = 0; i < t; i++)
-            for (int j = 0; j < t; j++) {
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++) {
                     if(m[i][j]==1)
                         suma+=1;
             }
-        porc=(100*suma)/(t*t);
+        porc=(100*suma)/(25);
         return porc;
     }
 }
 
 class Encuesta2 extends Encuesta1
-{  private int m[][];
-    
+{ 
+     private int m[][];
     Encuesta2(){
-        m=new int[t][t];
+        m=new int[5][5];
     }
     
     @Override
     public void asignar(int x[][]){
         m=x;
     }
+    
+    
+    public int[][] getMatriz(){
+    	return m;
+    	}
     @Override
     public int[] calcularCiertas(){
-        int suma=0,x=0,vec[]=new int[5];
-            for (int i = 0; i < t; i++){
-                for (int j = 0; j < t; j++) {
+        
+        int suma=0,x=0,vec2[]=new int[5];
+        vec2=super.calcularCiertas();
+            
+            for (int i = 0; i < 5; i++){
+                for (int j = 0; j < 5; j++) {
                         if(m[i][j]==1)
                             suma+=1;
                 }
-            vec[x]=suma;
+            vec2[x]+=suma;
             x++;
             suma=0;
             }
-        return vec;
+        return vec2;
     }
     
     @Override
     public double calcularPorcentaje(){
-         int suma=0;
+         int suma=0,veca[]=calcularCiertas();
          double porc;
-        for (int i = 0; i < t; i++)
-            for (int j = 0; j < t; j++) {
-                    if(m[i][j]==1)
-                        suma+=1;
-            }
-        porc=(100*suma)/(t*t);
+        
+        for (int i = 0; i < veca.length; i++)
+            suma+=veca[i];
+            
+        porc=(100*suma)/(50);
         return porc;
     }
 }
@@ -109,8 +106,8 @@ public class Proyecto1
     	 BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
          
          //Los objetos van aqui 
-         Encuesta1 obj = new Encuesta1();
-         Encuesta2 obj2 = new Encuesta2();
+         Encuesta1 obj;
+         Encuesta2 obj2;
          //La variable elejir es para el menu que esta hecho con un switch se sale con la opción 3 y seguir es para que el do/while continue en ejecución 
     	 int elegir=0, seguir=0, p=0;
          //Vector de preguntas
