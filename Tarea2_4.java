@@ -38,14 +38,14 @@ class AsignarArchivos
      {
 
         boolean resultado;
-
+      
         try {
             Integer.parseInt(cadena);	
             resultado = true;
         } catch (NumberFormatException excepcion) {
             resultado = false;
         }
-
+        
         return resultado;
     }   
    boolean leer ()  throws Exception
@@ -53,8 +53,16 @@ class AsignarArchivos
        
        try 
          {  
-         	cont=e.readLine ();
-            if(isNumeric(cont) == true)
+           	cont=e.readLine ();
+          // para controlar fin de archivo ( no hay más datos)
+          // se verifica si el registro es null
+          if (cont == null)
+           { 
+           	  fin = true;
+           
+           }
+           //llama a la funcion isNumeric verifica si es un numero entero o un caracter
+           else if(isNumeric(cont) == true)
             {
               d.println(cont);
             }
@@ -64,10 +72,6 @@ class AsignarArchivos
               l.println(cont);
             }	
             	
-          // para controlar fin de archivo ( no hay más datos)
-          // se verifica si el registro es null
-          if (cont == null)
-              fin = true;
           }                  
          catch (IOException y)
           {throw y; }
